@@ -10,6 +10,8 @@ this project is based in :
 
 ## how to use this
 
+* [active Google App Script API](https://script.google.com/home/usersettings)
+
 this is a sample, change to your parameter to use.
 
 
@@ -47,3 +49,61 @@ You need review the permissions to run this script.
 After the review you have the webhook url.
 
 Save this url to use with your integration.
+
+#### data to this sample
+
+```json
+{
+   "sheet_name":"disk",
+   "token":"xxxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxxxxx",
+   "data":{
+      "total":50,
+      "total_unit":"Gb",
+      "used":1234546789,
+      "used_unit":"bites",
+      "host":"win-ax-app0",
+      "address":"192.168.1.100"
+   }
+}
+```
+
+#### other data sample
+
+```json
+{
+   "sheet_name":"cpu",
+   "token":"xxxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxxxxx",
+   "data":{
+      "address":"192.168.1.100",
+      "host":"myhost",
+      "since":"07:01:29",
+      "up":"1:37",
+      "users":4,
+      "load-1":0.54,
+      "load-5":1.17,
+      "load-15":1.44
+   }
+}
+```
+
+### obrigatory elements in data
+
+* **sheet_name** - name from worksheet to write data.
+* **token** - access token to write in spreadsheet, this token is write in sheet ***settings***.
+* **data** - to write in sheet the fields in data element you need write the name in the first line of the sheet.
+
+### sample requests
+
+```bash
+curl \
+    --header 'Content-Type: application/json;charset=UTF-8' \
+    --data-binary '{"sheet_name": "disk","token": "xxxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxxxxx","data": {"total": 50,"total_unit": "Gb","used": 1234546789,"used_unit": "bites","host": "win-ax-app0","address": "192.168.1.100"}}' \
+    --silent 'https://script.google.com/macros/s/<id>/exec'
+```
+
+```bash
+curl \
+    --header 'Content-Type: application/json;charset=UTF-8' \
+    --data-binary '{"sheet_name": "cpu","token": "xxxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxxxxx","data": {"address": "192.168.1.100","host":"myhost","since": "07:01:29", "up":"1:37", "users":4, "load-1":0.54, "load-5":1.17, "load-15":1.44}}' \
+    --silent 'https://script.google.com/macros/s/<id>/exec'
+```

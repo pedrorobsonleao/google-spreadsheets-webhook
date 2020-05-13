@@ -24,36 +24,38 @@ function doGet(e) {
 
 //this is a function that fires when the webapp receives a POST request
 function doPost(e) {
-  let params = JSON.stringify(e.postData.contents);
-  params = JSON.parse(params);
-  let data = JSON.parse(e.postData.contents);
+  if(e.postData && e.postData.contents) {
+    let params = JSON.stringify(e.postData.contents);
+    params = JSON.parse(params);
+    let data = JSON.parse(e.postData.contents);
 
-  if (configuration.has()) {
-    let user = configuration.get(data.token);
+    if (configuration.has()) {
+      let user = configuration.get(data.token);
 
-    data.data.user = user;
-    data.data.date = new Date();
+      data.data.user = user;
+      data.data.date = new Date();
 
-    let responseMsg = "discarded post";
-    if (user) {
-      var sheet = SpreadsheetApp.getActive().getSheetByName(data.sheet_name);
-      if (sheet) {
-        let header = sheet.getRange("A1:Z1").getValues();
-        let values = [];
-        header[0].forEach((key, idx) => {
-          if (data.data[key]) {
-            values[idx] = data.data[key];
-          }
-        });
+      let responseMsg = "discarded post";
+      if (user) {
+        var sheet = SpreadsheetApp.getActive().getSheetByName(data.sheet_name);
+        if (sheet) {
+          let header = sheet.getRange("A1:Z1").getValues();
+          let values = [];
+          header[0].forEach((key, idx) => {
+            if (data.data[key]) {
+              values[idx] = data.data[key];
+            }
+          });
 
-        sheet.appendRow(values);
-        responseMsg = "post accepted";
-        SpreadsheetApp.flush();
+          sheet.appendRow(values);
+          responseMsg = "post accepted";
+          SpreadsheetApp.flush();
+        }
       }
     }
-  }
 
-  return HtmlService.createHtmlOutput(responseMsg);
+    return HtmlService.createHtmlOutput(responseMsg);
+  }
 }
 
 
