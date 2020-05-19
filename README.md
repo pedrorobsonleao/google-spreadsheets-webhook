@@ -86,7 +86,7 @@ Save this url to use with your integration.
 }
 ```
 
-### obrigatory elements in data
+### mandatory elements in data
 
 * **sheet_name** - name from worksheet to write data.
 * **token** - access token to write in spreadsheet, this token is write in sheet ***settings***.
