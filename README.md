@@ -1,6 +1,6 @@
-# google-spreadsheets-webhoot
+# google-spreadsheets-webhook
 ---
-Webhook on Google Spreadsheet
+Webhook on Google Spreadsheek
 
 this code implement a simple webhook in google spreadsheet platform.
 
